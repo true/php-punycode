@@ -108,6 +108,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase {
 				'δοκιμή.gr',
 				'xn--jxalpdlp.gr',
 			),
+			array(
+				'ফাহাদ্১৯.বাংলা',
+				'xn--65bj6btb5gwimc.xn--54b7fta0cc',
+			),
 		);
 	}
 }
