@@ -23,7 +23,8 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase {
  * @dataProvider domainNamesProvider
  */
 	public function testEncode($decoded, $encoded) {
-		$result = Punycode::encode($decoded);
+		$Punycode = new Punycode();
+		$result = $Punycode->encode($decoded);
 		$this->assertEquals($encoded, $result);
 	}
 
@@ -35,7 +36,8 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase {
  * @dataProvider domainNamesProvider
  */
 	public function testDecode($decoded, $encoded) {
-		$result = Punycode::decode($encoded);
+		$Punycode = new Punycode();
+		$result = $Punycode->decode($encoded);
 		$this->assertEquals($decoded, $result);
 	}
 
