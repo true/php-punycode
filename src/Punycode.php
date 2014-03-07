@@ -56,12 +56,18 @@ class Punycode {
 	public static function encode($input) {
 		$parts = explode('.', $input);
 		foreach ($parts as &$part) {
-			$part = static::_encode($part);
+			$part = static::_encodePart($part);
 		}
 		return implode('.', $parts);
 	}
 
-	protected static function _encode($input) {
+/**
+ * Encode a part of a domain name, such as tld, to its Punycode version
+ *
+ * @param string $input Part of a domain name
+ * @return string Punycode representation of a domain part
+ */
+	protected static function _encodePart($input) {
 		$codePoints = static::_codePoints($input);
 
 		$n = static::INITIAL_N;
@@ -137,12 +143,18 @@ class Punycode {
 	public static function decode($input) {
 		$parts = explode('.', $input);
 		foreach ($parts as &$part) {
-			$part = static::_decode($part);
+			$part = static::_decodePart($part);
 		}
 		return implode('.', $parts);
 	}
 
-	protected static function _decode($input) {
+/**
+ * Decode a part of domain name, such as tld
+ *
+ * @param string $input Part of a domain name
+ * @return string Unicode domain part
+ */
+	protected static function _decodePart($input) {
 		if (strpos($input, static::PREFIX) !== 0) {
 			return $input;
 		}
