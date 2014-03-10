@@ -80,7 +80,7 @@ class Punycode
 
         $output = '';
         foreach ($codePoints['basic'] as $code) {
-            $output .= chr($code);
+            $output .= $this->_codePointToChar($code);
         }
         if ($input === $output) {
             return $output;
