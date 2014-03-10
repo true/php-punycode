@@ -119,6 +119,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'ফাহাদ্১৯.বাংলা',
                 'xn--65bj6btb5gwimc.xn--54b7fta0cc',
             ),
+            array(
+                '𐌀𐌖𐌋𐌄𐌑𐌉·𐌌𐌄𐌕𐌄𐌋𐌉𐌑.gr',
+                'xn--uba5533kmaba1adkfh6ch2cg.gr',
+            ),
         );
     }
 }
