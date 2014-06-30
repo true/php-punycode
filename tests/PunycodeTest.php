@@ -1,7 +1,6 @@
 <?php
-namespace True;
 
-use True\Punycode;
+namespace True;
 
 class PunycodeTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,32 +16,28 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
         mb_internal_encoding('utf-8');
     }
 
-/**
- * Test encoding Punycode
- *
- * @param string $decoded Decoded domain
- * @param string $encoded Encoded domain
- * @dataProvider domainNamesProvider
- */
+    /**
+     * Test encoding Punycode
+     *
+     * @param string $decoded Decoded domain
+     * @param string $encoded Encoded domain
+     * @dataProvider domainNamesProvider
+     */
     public function testEncode($decoded, $encoded)
     {
-        $Punycode = new Punycode();
-        $result = $Punycode->encode($decoded);
-        $this->assertEquals($encoded, $result);
+        $this->assertEquals($encoded, Punycode::encode($decoded));
     }
 
-/**
- * Test decoding Punycode
- *
- * @param string $decoded Decoded domain
- * @param string $encoded Encoded domain
- * @dataProvider domainNamesProvider
- */
+    /**
+     * Test decoding Punycode
+     *
+     * @param string $decoded Decoded domain
+     * @param string $encoded Encoded domain
+     * @dataProvider domainNamesProvider
+     */
     public function testDecode($decoded, $encoded)
     {
-        $Punycode = new Punycode();
-        $result = $Punycode->decode($encoded);
-        $this->assertEquals($decoded, $result);
+        $this->assertEquals($decoded, Punycode::decode($encoded));
     }
 
 /**
