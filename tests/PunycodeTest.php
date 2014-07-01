@@ -4,18 +4,6 @@ namespace True;
 
 class PunycodeTest extends \PHPUnit_Framework_TestCase
 {
-
-/**
- * Make sure the right internal encoding is defined when testing
- *
- */
-    public function setUp()
-    {
-        parent::setUp();
-
-        mb_internal_encoding('utf-8');
-    }
-
     /**
      * Test encoding Punycode
      *
@@ -25,7 +13,7 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncode($decoded, $encoded)
     {
-        $this->assertEquals($encoded, Punycode::encode($decoded));
+        $this->assertSame($encoded, Punycode::encode($decoded));
     }
 
     /**
@@ -37,14 +25,14 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecode($decoded, $encoded)
     {
-        $this->assertEquals($decoded, Punycode::decode($encoded));
+        $this->assertSame($decoded, Punycode::decode($encoded));
     }
 
-/**
- * Provide domain names containing the decoded and encoded names
- *
- * @return array
- */
+    /**
+     * Provide domain names containing the decoded and encoded names
+     *
+     * @return array
+     */
     public function domainNamesProvider()
     {
         return array(
