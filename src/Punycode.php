@@ -9,10 +9,10 @@ namespace True;
 class Punycode
 {
 
-/**
- * Bootstring parameter values
- *
- */
+    /**
+     * Bootstring parameter values
+     *
+     */
     const BASE         = 36;
     const TMIN         = 1;
     const TMAX         = 26;
@@ -23,22 +23,22 @@ class Punycode
     const PREFIX       = 'xn--';
     const DELIMITER    = '-';
 
-/**
- * Encode table
- *
- * @param array
- */
+    /**
+     * Encode table
+     *
+     * @param array
+     */
     protected static $_encodeTable = array(
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
         'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
         'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     );
 
-/**
- * Decode table
- *
- * @param array
- */
+    /**
+     * Decode table
+     *
+     * @param array
+     */
     protected static $_decodeTable = array(
         'a' =>  0, 'b' =>  1, 'c' =>  2, 'd' =>  3, 'e' =>  4, 'f' =>  5,
         'g' =>  6, 'h' =>  7, 'i' =>  8, 'j' =>  9, 'k' => 10, 'l' => 11,
@@ -48,27 +48,28 @@ class Punycode
         '4' => 30, '5' => 31, '6' => 32, '7' => 33, '8' => 34, '9' => 35
     );
 
-/**
- * Encode a domain to its Punycode version
- *
- * @param string $input Domain name in Unicde to be encoded
- * @return string Punycode representation in ASCII
- */
+    /**
+     * Encode a domain to its Punycode version
+     *
+     * @param string $input Domain name in Unicde to be encoded
+     * @return string Punycode representation in ASCII
+     */
     public function encode($input)
     {
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
             $part = $this->_encodePart($part);
         }
+
         return implode('.', $parts);
     }
 
-/**
- * Encode a part of a domain name, such as tld, to its Punycode version
- *
- * @param string $input Part of a domain name
- * @return string Punycode representation of a domain part
- */
+    /**
+     * Encode a part of a domain name, such as tld, to its Punycode version
+     *
+     * @param string $input Part of a domain name
+     * @return string Punycode representation of a domain part
+     */
     protected function _encodePart($input)
     {
         $codePoints = $this->_codePoints($input);
@@ -137,27 +138,28 @@ class Punycode
         return static::PREFIX . $output;
     }
 
-/**
- * Decode a Punycode domain name to its Unicode counterpart
- *
- * @param string $input Domain name in Punycode
- * @return string Unicode domain name
- */
+    /**
+     * Decode a Punycode domain name to its Unicode counterpart
+     *
+     * @param string $input Domain name in Punycode
+     * @return string Unicode domain name
+     */
     public function decode($input)
     {
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
             $part = $this->_decodePart($part);
         }
+
         return implode('.', $parts);
     }
 
-/**
- * Decode a part of domain name, such as tld
- *
- * @param string $input Part of a domain name
- * @return string Unicode domain part
- */
+    /**
+     * Decode a part of domain name, such as tld
+     *
+     * @param string $input Part of a domain name
+     * @return string Unicode domain part
+     */
     protected function _decodePart($input)
     {
         if (strpos($input, static::PREFIX) !== 0) {
@@ -202,7 +204,7 @@ class Punycode
             }
 
             $bias = $this->_adapt($i - $oldi, ++$outputLength, ($oldi === 0));
-            $n = $n + (int)($i / $outputLength);
+            $n = $n + (int) ($i / $outputLength);
             $i = $i % ($outputLength);
             $output = mb_substr($output, 0, $i) . $this->_codePointToChar($n) . mb_substr($output, $i, $outputLength - 1);
 
@@ -212,39 +214,39 @@ class Punycode
         return $output;
     }
 
-/**
- * Bias adaptation
- *
- * @param integer $delta
- * @param integer $numPoints
- * @param boolean $firstTime
- * @return integer
- */
+    /**
+     * Bias adaptation
+     *
+     * @param integer $delta
+     * @param integer $numPoints
+     * @param boolean $firstTime
+     * @return integer
+     */
     protected function _adapt($delta, $numPoints, $firstTime)
     {
-        $delta = (int)(
+        $delta = (int) (
             ($firstTime)
                 ? $delta / static::DAMP
                 : $delta / 2
             );
-        $delta += (int)($delta / $numPoints);
+        $delta += (int) ($delta / $numPoints);
 
         $k = 0;
         while ($delta > ((static::BASE - static::TMIN) * static::TMAX) / 2) {
-            $delta = (int)($delta / (static::BASE - static::TMIN));
+            $delta = (int) ($delta / (static::BASE - static::TMIN));
             $k = $k + static::BASE;
         }
-        $k = $k + (int)(((static::BASE - static::TMIN + 1) * $delta) / ($delta + static::SKEW));
+        $k = $k + (int) (((static::BASE - static::TMIN + 1) * $delta) / ($delta + static::SKEW));
 
         return $k;
     }
 
-/**
- * List code points for a given input
- *
- * @param string $input
- * @return array Multi-dimension array with basic, non-basic and aggregated code points
- */
+    /**
+     * List code points for a given input
+     *
+     * @param string $input
+     * @return array Multi-dimension array with basic, non-basic and aggregated code points
+     */
     protected function _codePoints($input)
     {
         $codePoints = array(
@@ -267,12 +269,12 @@ class Punycode
         return $codePoints;
     }
 
-/**
- * Convert a single or multi-byte character to its code point
- *
- * @param string $char
- * @return integer
- */
+    /**
+     * Convert a single or multi-byte character to its code point
+     *
+     * @param string $char
+     * @return integer
+     */
     protected function _charToCodePoint($char)
     {
         $code = ord($char[0]);
@@ -287,12 +289,12 @@ class Punycode
         }
     }
 
-/**
- * Convert a code point to its single or multi-byte character
- *
- * @param integer $code
- * @return string
- */
+    /**
+     * Convert a code point to its single or multi-byte character
+     *
+     * @param integer $code
+     * @return string
+     */
     protected function _codePointToChar($code)
     {
         if ($code <= 0x7F) {
