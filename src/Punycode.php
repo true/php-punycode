@@ -107,13 +107,7 @@ class Punycode
                 if ($c === $n) {
                     $q = $delta;
                     for ($k = static::BASE;; $k += static::BASE) {
-                        if ($k <= $bias + static::TMIN) {
-                            $t = static::TMIN;
-                        } elseif ($k >= $bias + static::TMAX) {
-                            $t = static::TMAX;
-                        } else {
-                            $t = $k - $bias;
-                        }
+                        $t = $this->_calculateThreshold($k, $bias);
                         if ($q < $t) {
                             break;
                         }
@@ -188,14 +182,8 @@ class Punycode
             for ($k = static::BASE;; $k += static::BASE) {
                 $digit = static::$_decodeTable[$input[$pos++]];
                 $i = $i + ($digit * $w);
+                $t = $this->_calculateThreshold($k, $bias);
 
-                if ($k <= $bias + static::TMIN) {
-                    $t = static::TMIN;
-                } elseif ($k >= $bias + static::TMAX) {
-                    $t = static::TMAX;
-                } else {
-                    $t = $k - $bias;
-                }
                 if ($digit < $t) {
                     break;
                 }
@@ -212,6 +200,23 @@ class Punycode
         }
 
         return $output;
+    }
+
+    /**
+     * Calculate the bias threshold to fall between TMIN and TMAX
+     *
+     * @param integer $k
+     * @param integer $bias
+     * @return integer
+     */
+    protected function _calculateThreshold($k, $bias)
+    {
+        if ($k <= $bias + static::TMIN) {
+            return static::TMIN;
+        } elseif ($k >= $bias + static::TMAX) {
+            return static::TMAX;
+        }
+        return $k - $bias;
     }
 
     /**
