@@ -142,6 +142,11 @@ class Punycode
     {
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
+            if (strpos($part, static::PREFIX) !== 0) {
+                continue;
+            }
+
+            $part = substr($part, strlen(static::PREFIX));
             $part = $this->_decodePart($part);
         }
 
@@ -156,11 +161,6 @@ class Punycode
      */
     protected function _decodePart($input)
     {
-        if (strpos($input, static::PREFIX) !== 0) {
-            return $input;
-        }
-        $input = ltrim($input, static::PREFIX);
-
         $n = static::INITIAL_N;
         $i = 0;
         $bias = static::INITIAL_BIAS;

@@ -121,6 +121,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 '𐌀𐌖𐌋𐌄𐌑𐌉·𐌌𐌄𐌕𐌄𐌋𐌉𐌑.gr',
                 'xn--uba5533kmaba1adkfh6ch2cg.gr',
             ),
+            array(
+                'guangdong.广东',
+                'guangdong.xn--xhq521b',
+            ),
         );
     }
 }
