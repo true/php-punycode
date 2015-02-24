@@ -5,17 +5,6 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * Make sure the right internal encoding is defined when testing
-     *
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        mb_internal_encoding('utf-8');
-    }
-
-    /**
      * Test encoding Punycode
      *
      * @param string $decoded Decoded domain
