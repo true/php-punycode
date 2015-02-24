@@ -125,6 +125,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'guangdong.广东',
                 'guangdong.xn--xhq521b',
             ),
+            array(
+                'gwóźdź.pl',
+                'xn--gwd-hna98db.pl',
+            ),
         );
     }
 }
