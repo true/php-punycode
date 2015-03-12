@@ -10,7 +10,7 @@ A Bootstring encoding of Unicode for Internationalized Domain Names in Applicati
 ## Install
 
 ```
-composer require true/punycode:~1.0
+composer require true/punycode:~1.1
 ```
 
 
