@@ -49,6 +49,23 @@ class Punycode
     );
 
     /**
+     * Character encoding
+     *
+     * @param string
+     */
+    protected $encoding;
+
+    /**
+     * Constructor
+     *
+     * @param string $encoding Character encoding
+     */
+    public function __construct($encoding = 'UTF-8')
+    {
+        $this->encoding = $encoding;
+    }
+
+    /**
      * Encode a domain to its Punycode version
      *
      * @param string $input Domain name in Unicde to be encoded
@@ -94,7 +111,7 @@ class Punycode
         sort($codePoints['nonBasic']);
 
         $i = 0;
-        $length = mb_strlen($input);
+        $length = mb_strlen($input, $this->encoding);
         while ($h < $length) {
             $m = $codePoints['nonBasic'][$i++];
             $delta = $delta + ($m - $n) * ($h + 1);
@@ -194,7 +211,7 @@ class Punycode
             $bias = $this->_adapt($i - $oldi, ++$outputLength, ($oldi === 0));
             $n = $n + (int) ($i / $outputLength);
             $i = $i % ($outputLength);
-            $output = mb_substr($output, 0, $i) . $this->_codePointToChar($n) . mb_substr($output, $i, $outputLength - 1);
+            $output = mb_substr($output, 0, $i, $this->encoding) . $this->_codePointToChar($n) . mb_substr($output, $i, $outputLength - 1, $this->encoding);
 
             $i++;
         }
@@ -260,9 +277,9 @@ class Punycode
             'nonBasic' => array(),
         );
 
-        $length = mb_strlen($input);
+        $length = mb_strlen($input, $this->encoding);
         for ($i = 0; $i < $length; $i++) {
-            $char = mb_substr($input, $i, 1);
+            $char = mb_substr($input, $i, 1, $this->encoding);
             $code = $this->_charToCodePoint($char);
             if ($code < 128) {
                 $codePoints['all'][] = $codePoints['basic'][] = $code;
