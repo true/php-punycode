@@ -11,7 +11,7 @@ A Bootstring encoding of Unicode for Internationalized Domain Names in Applicati
 ## Install
 
 ```
-composer require true/punycode:~1.1
+composer require true/punycode:~2.0
 ```
 
 

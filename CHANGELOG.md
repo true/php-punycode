@@ -1,8 +1,15 @@
 # Changelog
 
+## 2.0.0 - 2015-06-24
+
+- [Enhancement] PHP 7 support
+- [Fix] Renamed `True` namespace to `TrueBV` as it is a reserved word in PHP 7
+
+
 ## 1.1.0 - 2015-03-12
 
 - [Enhancement] Character encoding is now passed to the constructor, defaulting to UTF-8, as opposite to relying on `mb_internal_encoding` function call (#9).
+
 
 ## 1.0.1 - 2014-08-26
 
