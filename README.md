@@ -21,7 +21,7 @@ composer require true/punycode:~1.1
 <?php
 
 // Import Punycode
-use True\Punycode;
+use TrueBV\Punycode;
 
 $Punycode = new Punycode();
 var_dump($Punycode->encode('renangonçalves.com'));
