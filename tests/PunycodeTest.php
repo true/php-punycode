@@ -118,6 +118,22 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'gwóźdź.pl',
                 'xn--gwd-hna98db.pl',
             ),
+            array(
+                '[::1]',
+                '[::1]'
+            ),
+            array(
+                '127.0.0.1',
+                '127.0.0.1'
+            ),
+            array(
+                '例子.xn--1',
+                'xn--fsqu00a.xn--1'
+            ),
+            array(
+                '例子.xn--g6w131251d',
+                'xn--fsqu00a.xn--g6w131251d',
+            ),
         );
     }
 }
