@@ -1,5 +1,5 @@
 <?php
-namespace True;
+namespace TrueBV;
 
 /**
  * Punycode implementation as described in RFC 3492

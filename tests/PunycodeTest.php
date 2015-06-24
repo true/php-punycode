@@ -1,5 +1,5 @@
 <?php
-namespace True;
+namespace TrueBV;
 
 class PunycodeTest extends \PHPUnit_Framework_TestCase
 {

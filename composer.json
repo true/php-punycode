@@ -14,7 +14,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"True\\": "src/"
+			"TrueBV\\": "src/"
 		}
 	},
 	"require": {
