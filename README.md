@@ -1,7 +1,8 @@
 # Punycode
 
 [![Build Status](https://secure.travis-ci.org/true/php-punycode.png?branch=master)](http://travis-ci.org/true/php-punycode)
-[![Coverage Status](https://coveralls.io/repos/true/php-punycode/badge.png?branch=master)](https://coveralls.io/r/true/php-punycode)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/true/php-punycode/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/true/php-punycode/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/true/php-punycode/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/true/php-punycode/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/true/punycode/version.png)](https://packagist.org/packages/true/punycode)
 
 A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA).
