@@ -13,9 +13,8 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncode($decoded, $encoded)
     {
-        $Punycode = new Punycode();
-        $result = $Punycode->encode($decoded);
-        $this->assertEquals($encoded, $result);
+        $punycode = new Punycode();
+        $this->assertSame($encoded, $punycode->encode($decoded));
     }
 
     /**
@@ -27,9 +26,8 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecode($decoded, $encoded)
     {
-        $Punycode = new Punycode();
-        $result = $Punycode->decode($encoded);
-        $this->assertEquals($decoded, $result);
+        $punycode = new Punycode();
+        $this->assertSame($decoded, $punycode->decode($encoded));
     }
 
     /**
@@ -126,14 +124,32 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 '127.0.0.1',
                 '127.0.0.1'
             ),
-            array(
-                '例子.xn--1',
-                'xn--fsqu00a.xn--1'
-            ),
-            array(
-                '例子.xn--g6w131251d',
-                'xn--fsqu00a.xn--g6w131251d',
-            ),
+        );
+    }
+
+    public function testReturnNotDecodeLabel()
+    {
+        $expected = 'xn--£coco';
+        $punycode = new Punycode();
+        $this->assertSame($expected, $punycode->decode($expected));
+    }
+
+    /**
+     * @param $label
+     * @dataProvider invalidDecodedLabelProvider
+     * @expectedException TrueBV\PunycodeException
+     */
+    public function testInvalidDecodeLabel($label)
+    {
+        $punycode = new Punycode();
+        $punycode->decode($label);
+    }
+
+    public function invalidDecodedLabelProvider()
+    {
+        return array(
+            'invalid label' => array('xn--fsqu00a.xn--1'),
+            'invalid codePoint' => array('xn--fsqu00a.xn--g6w131251d'),
         );
     }
 }

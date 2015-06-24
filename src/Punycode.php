@@ -67,11 +67,11 @@ class Punycode
     }
 
     /**
-     * Encode a part of a domain name, such as tld, to its Punycode version
+     * Encode a domain name to its Punycode version
      *
      * @param string $input Part of a domain name
      *
-     * @return string Punycode representation of a domain part
+     * @return string Punycode representation in ASCII
      */
     public function encode($input)
     {
@@ -82,6 +82,8 @@ class Punycode
      * Decode a Punycode domain name to its Unicode counterpart
      *
      * @param string $input Domain name in Punycode
+     *
+     * @throws PunycodeException if a host label can not be decoded
      *
      * @return string Unicode domain name
      */
@@ -95,7 +97,7 @@ class Punycode
      *
      * @param string $input hostname label
      *
-     * @return string hostname label punycode representation
+     * @return string hostname label punycode representation in ASCII
      */
     public function encodeLabel($input)
     {
@@ -108,11 +110,11 @@ class Punycode
     }
 
     /**
-     * Return a punycoded host label into its unicode representation
+     * Decode a Punycode hostname label to its Unicode counterpart
      *
-     * @param  string $input
+     * @param string $input hostname label
      *
-     * @return string
+     * @return string Unicode hostname label
      */
     public function decodeLabel($input)
     {
@@ -121,12 +123,11 @@ class Punycode
         }
 
         $codePoints = $this->codePoints($input);
-        $rawLabel   = substr($input, strlen(static::PREFIX));
-        if (!empty($codePoints["nonBasic"]) || !($decoded = $this->decodeString($rawLabel))) {
+        if (! empty($codePoints["nonBasic"])) {
             return $input;
         }
 
-        return $decoded;
+        return $this->decodeString(substr($input, strlen(static::PREFIX)));
     }
 
     /**
@@ -140,7 +141,7 @@ class Punycode
     {
         $codePoints = array('all' => array(), 'basic' => array(), 'nonBasic' => array());
         $codePoints['all'] = array_map(
-            [$this, 'charToCodePoint'],
+            array($this, 'charToCodePoint'),
             preg_split("//u", $input, -1, PREG_SPLIT_NO_EMPTY)
         );
 
@@ -307,6 +308,8 @@ class Punycode
      *
      * @param string $input the punycode encoded label
      *
+     * @throws PunycodeException if a host label can not be decoded
+     *
      * @return string|false Unicode hostname
      */
     protected function decodeString($input)
@@ -325,7 +328,7 @@ class Punycode
         while ($pos < $inputLength) {
             for ($oldi = $i, $w = 1, $k = static::BASE;; $k += static::BASE) {
                 if ($pos >= $inputLength) {
-                    return false;
+                    throw new PunycodeException('the host label can not be decoded');
                 }
                 $digit = static::$decodeTable[$input[$pos++]];
                 $i    += $digit * $w;
@@ -340,9 +343,9 @@ class Punycode
             $i   %= $outputLength;
             $code = $this->codePointToChar($n);
             if (!mb_check_encoding($code, $this->encoding)) {
-                return false;
+                throw new PunycodeException('the host label can not be decoded');
             }
-            $output = array_merge(array_slice($output, 0, $i), [$code], array_slice($output, $i));
+            $output = array_merge(array_slice($output, 0, $i), array($code), array_slice($output, $i));
             $i++;
         }
 
