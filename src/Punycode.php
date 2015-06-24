@@ -28,7 +28,7 @@ class Punycode
      *
      * @param array
      */
-    protected static $_encodeTable = array(
+    protected static $encodeTable = array(
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
         'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
         'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -39,7 +39,7 @@ class Punycode
      *
      * @param array
      */
-    protected static $_decodeTable = array(
+    protected static $decodeTable = array(
         'a' =>  0, 'b' =>  1, 'c' =>  2, 'd' =>  3, 'e' =>  4, 'f' =>  5,
         'g' =>  6, 'h' =>  7, 'i' =>  8, 'j' =>  9, 'k' => 10, 'l' => 11,
         'm' => 12, 'n' => 13, 'o' => 14, 'p' => 15, 'q' => 16, 'r' => 17,
@@ -68,14 +68,14 @@ class Punycode
     /**
      * Encode a domain to its Punycode version
      *
-     * @param string $input Domain name in Unicde to be encoded
+     * @param string $input Domain name in Unicode to be encoded
      * @return string Punycode representation in ASCII
      */
     public function encode($input)
     {
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
-            $part = $this->_encodePart($part);
+            $part = $this->encodePart($part);
         }
 
         return implode('.', $parts);
@@ -87,9 +87,9 @@ class Punycode
      * @param string $input Part of a domain name
      * @return string Punycode representation of a domain part
      */
-    protected function _encodePart($input)
+    protected function encodePart($input)
     {
-        $codePoints = $this->_codePoints($input);
+        $codePoints = $this->listCodePoints($input);
 
         $n = static::INITIAL_N;
         $bias = static::INITIAL_BIAS;
@@ -98,7 +98,7 @@ class Punycode
 
         $output = '';
         foreach ($codePoints['basic'] as $code) {
-            $output .= $this->_codePointToChar($code);
+            $output .= $this->codePointToChar($code);
         }
         if ($input === $output) {
             return $output;
@@ -124,19 +124,19 @@ class Punycode
                 if ($c === $n) {
                     $q = $delta;
                     for ($k = static::BASE;; $k += static::BASE) {
-                        $t = $this->_calculateThreshold($k, $bias);
+                        $t = $this->calculateThreshold($k, $bias);
                         if ($q < $t) {
                             break;
                         }
 
                         $code = $t + (($q - $t) % (static::BASE - $t));
-                        $output .= static::$_encodeTable[$code];
+                        $output .= static::$encodeTable[$code];
 
                         $q = ($q - $t) / (static::BASE - $t);
                     }
 
-                    $output .= static::$_encodeTable[$q];
-                    $bias = $this->_adapt($delta, $h + 1, ($h === $b));
+                    $output .= static::$encodeTable[$q];
+                    $bias = $this->adapt($delta, $h + 1, ($h === $b));
                     $delta = 0;
                     $h++;
                 }
@@ -164,7 +164,7 @@ class Punycode
             }
 
             $part = substr($part, strlen(static::PREFIX));
-            $part = $this->_decodePart($part);
+            $part = $this->decodePart($part);
         }
 
         return implode('.', $parts);
@@ -176,7 +176,7 @@ class Punycode
      * @param string $input Part of a domain name
      * @return string Unicode domain part
      */
-    protected function _decodePart($input)
+    protected function decodePart($input)
     {
         $n = static::INITIAL_N;
         $i = 0;
@@ -197,9 +197,9 @@ class Punycode
             $w = 1;
 
             for ($k = static::BASE;; $k += static::BASE) {
-                $digit = static::$_decodeTable[$input[$pos++]];
+                $digit = static::$decodeTable[$input[$pos++]];
                 $i = $i + ($digit * $w);
-                $t = $this->_calculateThreshold($k, $bias);
+                $t = $this->calculateThreshold($k, $bias);
 
                 if ($digit < $t) {
                     break;
@@ -208,10 +208,10 @@ class Punycode
                 $w = $w * (static::BASE - $t);
             }
 
-            $bias = $this->_adapt($i - $oldi, ++$outputLength, ($oldi === 0));
+            $bias = $this->adapt($i - $oldi, ++$outputLength, ($oldi === 0));
             $n = $n + (int) ($i / $outputLength);
             $i = $i % ($outputLength);
-            $output = mb_substr($output, 0, $i, $this->encoding) . $this->_codePointToChar($n) . mb_substr($output, $i, $outputLength - 1, $this->encoding);
+            $output = mb_substr($output, 0, $i, $this->encoding) . $this->codePointToChar($n) . mb_substr($output, $i, $outputLength - 1, $this->encoding);
 
             $i++;
         }
@@ -226,7 +226,7 @@ class Punycode
      * @param integer $bias
      * @return integer
      */
-    protected function _calculateThreshold($k, $bias)
+    protected function calculateThreshold($k, $bias)
     {
         if ($k <= $bias + static::TMIN) {
             return static::TMIN;
@@ -244,7 +244,7 @@ class Punycode
      * @param boolean $firstTime
      * @return integer
      */
-    protected function _adapt($delta, $numPoints, $firstTime)
+    protected function adapt($delta, $numPoints, $firstTime)
     {
         $delta = (int) (
             ($firstTime)
@@ -269,7 +269,7 @@ class Punycode
      * @param string $input
      * @return array Multi-dimension array with basic, non-basic and aggregated code points
      */
-    protected function _codePoints($input)
+    protected function listCodePoints($input)
     {
         $codePoints = array(
             'all'      => array(),
@@ -280,7 +280,7 @@ class Punycode
         $length = mb_strlen($input, $this->encoding);
         for ($i = 0; $i < $length; $i++) {
             $char = mb_substr($input, $i, 1, $this->encoding);
-            $code = $this->_charToCodePoint($char);
+            $code = $this->charToCodePoint($char);
             if ($code < 128) {
                 $codePoints['all'][] = $codePoints['basic'][] = $code;
             } else {
@@ -297,7 +297,7 @@ class Punycode
      * @param string $char
      * @return integer
      */
-    protected function _charToCodePoint($char)
+    protected function charToCodePoint($char)
     {
         $code = ord($char[0]);
         if ($code < 128) {
@@ -317,7 +317,7 @@ class Punycode
      * @param integer $code
      * @return string
      */
-    protected function _codePointToChar($code)
+    protected function codePointToChar($code)
     {
         if ($code <= 0x7F) {
             return chr($code);
