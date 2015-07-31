@@ -77,7 +77,7 @@ class Punycode
      */
     private function isEncodingSupported($checkedEncoding)
     {
-        return false === @mb_encoding_aliases($checkedEncoding);
+        return false !== @mb_encoding_aliases($checkedEncoding);
     }
 
     /**
