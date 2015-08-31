@@ -1,7 +1,5 @@
 {
 	"name": "true/punycode",
-	"version": "2.0.0",
-	"type": "library",
 	"description": "A Bootstring encoding of Unicode for Internationalized Domain Names in Applications (IDNA)",
 	"keywords": ["IDNA", "punycode"],
 	"homepage": "https://github.com/true/php-punycode",
