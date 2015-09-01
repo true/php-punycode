@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 - 2015-09-01
+
+- [Fix] Removed `version` property from `composer.json` file
+  - Thanks to [@GrahamCampbell](https://github.com/GrahamCampbell) for the patch.
+
+
 ## 2.0.0 - 2015-06-24
 
 - [Enhancement] PHP 7 support
