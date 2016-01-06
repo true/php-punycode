@@ -73,6 +73,7 @@ class Punycode
      */
     public function encode($input)
     {
+        $input = mb_strtolower($input, $this->encoding);
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
             $part = $this->encodePart($part);
