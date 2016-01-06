@@ -157,6 +157,7 @@ class Punycode
      */
     public function decode($input)
     {
+        $input = strtolower($input);
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
             if (strpos($part, static::PREFIX) !== 0) {

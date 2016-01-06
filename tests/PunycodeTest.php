@@ -33,6 +33,20 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test decoding Punycode in uppercase
+     *
+     * @param string $decoded Decoded domain
+     * @param string $encoded Encoded domain
+     * @dataProvider domainNamesProvider
+     */
+    public function testDecodeUppercase($decoded, $encoded)
+    {
+        $Punycode = new Punycode();
+        $result = $Punycode->decode(strtoupper($encoded));
+        $this->assertEquals($decoded, $result);
+    }
+
+    /**
      * Provide domain names containing the decoded and encoded names
      *
      * @return array
