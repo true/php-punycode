@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.2 - 2016-01-07
+
+- [Fix] Encode and decode domains regardless of their casing (#16)
+  - Thanks to [@abcdmitry](https://github.com/abcdmitry) for the full patch.
+
+
 ## 2.0.1 - 2015-09-01
 
 - [Fix] Removed `version` property from `composer.json` file
