@@ -226,6 +226,11 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $ex->getMessage());
     }
 
+    /**
+     * Provide invalid domain names containing the encoded names
+     *
+     * @return array
+     */
     public function invalidAsciiDomainNameProvider()
     {
         return array(
@@ -246,5 +251,4 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
             ),
         );
     }
-
 }
