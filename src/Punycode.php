@@ -79,12 +79,15 @@ class Punycode
         $input = mb_strtolower($input, $this->encoding);
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
-            if (($length = strlen($part)) < 1) {
+            $length = strlen($part);
+            if ($length < 1) {
                 throw new LabelOutOfBoundsException(sprintf('The length of any one label is limited to between 1 and 63 octets, but %s given.', $length));
             }
             $part = $this->encodePart($part);
         }
-        if (($length = strlen($output = implode('.', $parts))) > 255) {
+        $output = implode('.', $parts);
+        $length = strlen($output);
+        if ($length > 255) {
             throw new DomainOutOfBoundsException(sprintf('A full domain name is limited to 255 octets (including the separators), %s given.', $length));
         }
 
@@ -155,11 +158,13 @@ class Punycode
             $delta++;
             $n++;
         }
-        if (($length = strlen($output = static::PREFIX.$output)) > 63 || $length < 1) {
+        $out = static::PREFIX . $output;
+        $length = strlen($out);
+        if ($length > 63 || $length < 1) {
             throw new LabelOutOfBoundsException(sprintf('The length of any one label is limited to between 1 and 63 octets, but %s given.', $length));
         }
 
-        return $output;
+        return $out;
     }
 
     /**
@@ -173,7 +178,8 @@ class Punycode
         $input = strtolower($input);
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
-            if (($length = strlen($part)) > 63 || $length < 1) {
+            $length = strlen($part);
+            if ($length > 63 || $length < 1) {
                 throw new LabelOutOfBoundsException(sprintf('The length of any one label is limited to between 1 and 63 octets, but %s given.', $length));
             }
             if (strpos($part, static::PREFIX) !== 0) {
@@ -183,7 +189,9 @@ class Punycode
             $part = substr($part, strlen(static::PREFIX));
             $part = $this->decodePart($part);
         }
-        if (($length = strlen($output = implode('.', $parts))) > 255) {
+        $output = implode('.', $parts);
+        $length = strlen($output);
+        if ($length > 255) {
             throw new DomainOutOfBoundsException(sprintf('A full domain name is limited to 255 octets (including the separators), %s given.', $length));
         }
 
