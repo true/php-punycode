@@ -146,6 +146,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'gwóźdź.pl',
                 'xn--gwd-hna98db.pl',
             ),
+            array(
+                'άέήίΰαβγδεζηθικλμνξοπρσστυφχ.com',
+                'xn--hxacdefghijklmnopqrstuvw0caz0a1a2a.com'
+            ),
         );
     }
 
