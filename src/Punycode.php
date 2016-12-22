@@ -62,10 +62,25 @@ class Punycode
      * Constructor
      *
      * @param string $encoding Character encoding
+     * @throws \RuntimeException
      */
     public function __construct($encoding = 'UTF-8')
     {
+        if (false === $this->isEncodingSupported($encoding)) {
+            throw new \RuntimeException("Encoding $encoding is not supported");
+        }
         $this->encoding = $encoding;
+    }
+    
+    /**
+     * Check if provided encoding is supported by mb_string
+     *
+     * @param string $checkedEncoding
+     * @return bool
+     */
+    private function isEncodingSupported($checkedEncoding)
+    {
+        return false !== @mb_encoding_aliases($checkedEncoding);
     }
 
     /**
