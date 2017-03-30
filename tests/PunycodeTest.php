@@ -150,6 +150,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'άέήίΰαβγδεζηθικλμνξοπρσστυφχ.com',
                 'xn--hxacdefghijklmnopqrstuvw0caz0a1a2a.com'
             ),
+            array(
+                '你好.世界.',
+                'xn--6qq79v.xn--rhqv96g.'
+            ),
         );
     }
 
@@ -201,6 +205,12 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 '\TrueBV\Exception\LabelOutOfBoundsException',
                 'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
             ),
+            array(
+                '你好.世界..',
+                '\TrueBV\Exception\LabelOutOfBoundsException',
+                'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
+            ),
+
 
         );
     }
