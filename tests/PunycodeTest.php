@@ -263,6 +263,11 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 '\TrueBV\Exception\DomainOutOfBoundsException',
                 'A full domain name is limited to 255 octets (including the separators), 256 given.',
             ),
+            array(
+                'xn--6qq79v.xn--rhqv96g..',
+                '\TrueBV\Exception\LabelOutOfBoundsException',
+                'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
+            ),
         );
     }
 }
