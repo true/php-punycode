@@ -77,7 +77,14 @@ class Punycode
     public function encode($input)
     {
         $input = mb_strtolower($input, $this->encoding);
+
+        $isFQDN = false;
+        if (substr($input, -1) === '.') {
+            $isFQDN = true;
+            $input = substr($input, 0, -1);
+        }
         $parts = explode('.', $input);
+        
         foreach ($parts as &$part) {
             $length = strlen($part);
             if ($length < 1) {
@@ -85,7 +92,12 @@ class Punycode
             }
             $part = $this->encodePart($part);
         }
+
         $output = implode('.', $parts);
+        if ($isFQDN) {
+            $output .= '.';
+        }
+
         $length = strlen($output);
         if ($length > 255) {
             throw new DomainOutOfBoundsException(sprintf('A full domain name is limited to 255 octets (including the separators), %s given.', $length));
@@ -176,7 +188,14 @@ class Punycode
     public function decode($input)
     {
         $input = strtolower($input);
+
+        $isFQDN = false;
+        if (substr($input, -1) === '.') {
+            $isFQDN = true;
+            $input = substr($input, 0, -1);
+        }
         $parts = explode('.', $input);
+
         foreach ($parts as &$part) {
             $length = strlen($part);
             if ($length > 63 || $length < 1) {
@@ -190,6 +209,9 @@ class Punycode
             $part = $this->decodePart($part);
         }
         $output = implode('.', $parts);
+        if ($isFQDN) {
+            $output .= '.';
+        }
         $length = strlen($output);
         if ($length > 255) {
             throw new DomainOutOfBoundsException(sprintf('A full domain name is limited to 255 octets (including the separators), %s given.', $length));

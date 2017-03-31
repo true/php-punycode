@@ -150,6 +150,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'άέήίΰαβγδεζηθικλμνξοπρσστυφχ.com',
                 'xn--hxacdefghijklmnopqrstuvw0caz0a1a2a.com'
             ),
+            array(
+                '你好.世界.',
+                'xn--6qq79v.xn--rhqv96g.'
+            ),
         );
     }
 
@@ -201,6 +205,12 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 '\TrueBV\Exception\LabelOutOfBoundsException',
                 'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
             ),
+            array(
+                '你好.世界..',
+                '\TrueBV\Exception\LabelOutOfBoundsException',
+                'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
+            ),
+
 
         );
     }
@@ -252,6 +262,11 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'aaaaa.aaaaaaaaaaaaaaa.aaaaaaaaaaaaa.aaaaaaaaaaaaaaaa.aaaaaaaaaa.xn--zcaccffbljjkknn6lsd0d4a3b2b2b4b4byc8b0c8b4c0czcwd3c9c8c8c.xn--ddabeekggjj50c0ayw5a5a8d8a6cxb1bzfzb8b7bze8e8b.xn--pdaccf61ajetbrstxy0a1a5a5a9a2b0bzb6b5b8b.xn--hdazec20dnawqr.de',
                 '\TrueBV\Exception\DomainOutOfBoundsException',
                 'A full domain name is limited to 255 octets (including the separators), 256 given.',
+            ),
+            array(
+                'xn--6qq79v.xn--rhqv96g..',
+                '\TrueBV\Exception\LabelOutOfBoundsException',
+                'The length of any one label is limited to between 1 and 63 octets, but 0 given.',
             ),
         );
     }
