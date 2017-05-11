@@ -80,7 +80,7 @@ class Punycode
         $parts = explode('.', $input);
         foreach ($parts as &$part) {
             $length = strlen($part);
-            if ($length < 1) {
+            if ($length > 63 || $length < 1) {
                 throw new LabelOutOfBoundsException(sprintf('The length of any one label is limited to between 1 and 63 octets, but %s given.', $length));
             }
             $part = $this->encodePart($part);
