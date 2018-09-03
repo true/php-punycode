@@ -150,6 +150,10 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'άέήίΰαβγδεζηθικλμνξοπρσστυφχ.com',
                 'xn--hxacdefghijklmnopqrstuvw0caz0a1a2a.com'
             ),
+            array(
+                'абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаеж.рф',
+                'xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgiijk.xn--80aacefgii.xn--p1ai'
+            ),
         );
     }
 
@@ -187,14 +191,14 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'äöüßáàăâåãąāæćĉčċçďđéèĕêěëėęēğĝġģĥħíìĭîïĩįīıĵķĺľļłńňñņŋóòŏôőõøōœĸŕřŗśŝšşťţŧúùŭûůűũųūŵýŷÿźžżðþ.de',
+                'äöüßáàăâåãąāæćĉčċçďđéèĕêěëėęēğĝġģĥħì.de',
                 '\TrueBV\Exception\LabelOutOfBoundsException',
-                'The length of any one label is limited to between 1 and 63 octets, but 167 given.',
+                'The length of any one label is limited to between 1 and 63 octets, but 64 given.',
             ),
             array(
-                'aaaaa.aaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaa.äöüßáàăâåãąāæćĉčċçďđéèĕêěëėęēğĝġģĥ.ħíìĭîïĩįīıĵķĺľļłńňñņŋóòŏôőõ.øōœĸŕřŗśŝšşťţŧúùŭûůűũųū.ŵýŷÿźžżðþ.de',
+                'aaa.aaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaa.äöüßáàăâåãąāæćĉčċçďđéèĕêěëėęēğĝġģĥ.ħíìĭîïĩįīıĵķĺľļłńňñņŋóòŏôőõ.øōœĸŕřŗśŝšşťţŧúùŭûůűũųū.ŵýŷÿźžżðþ.de',
                 '\TrueBV\Exception\DomainOutOfBoundsException',
-                'A full domain name is limited to 255 octets (including the separators), 258 given.',
+                'A full domain name is limited to 255 octets (including the separators), 256 given.',
             ),
             array(
                 'aa..aa.de',
@@ -239,17 +243,12 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'xn--zcaccffbljjkknnoorrssuuxxd5e0a0a3ae9c6a4a9bzdzdxdudwdxd2d2d8d0dse7d6dwe9dxeueweye4eyewe9e5ewkkewc9ftfpfplwexfwf4infvf2f6f6f7f8fpg8fmgngrgrgvgzgygxg3gyg1g3g5gykqg9g.de',
+                'xn--90aaaaaaqbbbbb4bccccc3fdddddeeeeee2hffffflggggg5khhhhh6siiii.xn--p1ai',
                 '\TrueBV\Exception\LabelOutOfBoundsException',
-                'The length of any one label is limited to between 1 and 63 octets, but 167 given.',
+                'The length of any one label is limited to between 1 and 63 octets, but 64 given.',
             ),
             array(
-                'xn--zcaccffbljjkknnoorrssuuxxd5e0a0a3ae9c8c1b0dxdvdvdxdvd3d0d6dyd8d5d4due7dveseuewe2eweue7e3esk9dxc7frf9e7kuevfuf1ilftf5f4f4f5f6fng6f8f9fpgpgtgxgwgvg1g2gzg1g3gvkog7g.xn--vda.de',
-                '\TrueBV\Exception\LabelOutOfBoundsException',
-                'The length of any one label is limited to between 1 and 63 octets, but 165 given.',
-            ),
-            array(
-                'aaaaa.aaaaaaaaaaaaaaa.aaaaaaaaaaaaa.aaaaaaaaaaaaaaaa.aaaaaaaaaa.xn--zcaccffbljjkknn6lsd0d4a3b2b2b4b4byc8b0c8b4c0czcwd3c9c8c8c.xn--ddabeekggjj50c0ayw5a5a8d8a6cxb1bzfzb8b7bze8e8b.xn--pdaccf61ajetbrstxy0a1a5a5a9a2b0bzb6b5b8b.xn--hdazec20dnawqr.de',
+                'aaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaa.aaaaaaaaaaaaa.aaaaaaaaaaaaaaaa.aaaaaaaaaa.xn--zcaccffbljjkknn6lsd0d4a3b2b2b4b4byc8b0c8b4c0czcwd3c9c8c8c.xn--ddabeekggjj50c0ayw5a5a8d8a6cxb1bzfzb8b7bze8e8b.xn--pdaccf61ajetbrstxy0a1a5a5a9a2b0bzb6b5b8b.xn--hdazec20dnawqr.de',
                 '\TrueBV\Exception\DomainOutOfBoundsException',
                 'A full domain name is limited to 255 octets (including the separators), 256 given.',
             ),
