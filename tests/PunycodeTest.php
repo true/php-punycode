@@ -150,6 +150,14 @@ class PunycodeTest extends \PHPUnit_Framework_TestCase
                 'άέήίΰαβγδεζηθικλμνξοπρσστυφχ.com',
                 'xn--hxacdefghijklmnopqrstuvw0caz0a1a2a.com'
             ),
+            array(
+                'อีเมลทดสอบ@ยูเอทดสอบ.ไทย',
+                'xn--@-wxfbjcqd3cnz1df2afdd6jpd7fk.xn--o3cw4h'
+            ),
+            array(
+                'อีเมลทดสอบ@ทีเอชนิค.องค์กร.ไทยย',
+                'xn--@-0wfr2bocpe4dyb5c5afd1idj2qka.xn--12cfi8ixb8l.xn--o3cw4h'
+            ),
         );
     }
 
